@@ -59,19 +59,17 @@
                     <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- Portfolio Grid Items-->
+                <!-- Lab Grid Items-->
                 <div class="row justify-content-center">
-                    <!-- Portfolio Item 1-->
-                    <!--
+                    <!-- Lab Item 1-->
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" alt="image will be added" />
+                            <img class="img-fluid" src="assets/1a/lab_1_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
-                    -->
                 </div>
             </div>
         </section>
@@ -85,26 +83,166 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                    <div class="modal-body text-center pb-5">
+                    <div class="modal-body pb-5">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Lab 1: Artemis and Bluetooth</h2>
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 1: Artemis and Bluetooth</h2>
                                     <!-- Icon Divider-->
-                                    <div class="divider-custom">
+                                    <div class="divider-custom text-center">
                                         <div class="divider-custom-line"></div>
                                         <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" alt="image will be added" />
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lab 1 Report</p>
-                                    <button class="btn btn-primary" data-bs-dismiss="modal">
-                                        <i class="fas fa-xmark fa-fw"></i>
-                                        Close Window
-                                    </button>
+                                    <!-- Lab 1A -->
+                                    <p class="mb-4">The goal of this lab is get familiar with using the ArduinoIDE, Artemis Nano board, and BLE communication!</p>
+                                    <h2 class="mb-4 text-secondary">Lab 1A</h2>
+                                    <h3 class="mb-4 text-secondary">Prelab</h3>
+                                    <p class="mb-4">For the prelab, I added the latest version of the Sparkfun Appollo3 boards manager to the ArduinoIDE on my laptop.</p> 
+                                    <img class="img-fluid rounded mb-5" src="assets/1a/prelab.png" alt="..."/>
+                                    <h3 class="mb-4 text-secondary">Task 1: Setup</h3>
+                                    <p class="mb-4">For this task, I connected the Artemis Nano board to my laptop and selected the “RedBoard Artemis Nano” board and the corresponding serial port on the ArduinoIDE to ensure proper serial connections.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1a/task_1.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 2: Blink</h3>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/IXhPRStS1Aw?si=Gj2Gav1EMZa-A-xU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">For this task, I used the simple Blink example code to test the Artemis board.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 3: Serial</h3>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MH-1QSFDos4?si=ZUJh97m9OTOz4Nbh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">For this task, I used the Example04_Serial code to test the serial communication functionality of the Artemis board. Using the serial monitor in the ArduinoIDE, I confirmed that the board can print and echo back messages.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 4: AnalogRead</h3>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7XmdsNGj748?si=ktuascvckX4JX4bw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">For this task, I used the Example2_analogRead code to check if the temperature sensor is functioning properly. One challenge that I ran into while doing this task was that my hands were too cold to drastically change the chip’s temperature. As shown in the video, the temperature changed from around 32288 to 32908.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 5: PDM</h3>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/P0LV4PRMfLg?si=GxMgVCL_RkIkoBoj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">For this task, I used the Example1_MicrophoneOutput code to check if the microphone is functioning properly. In the video, I played the A4 note on my phone to check if the highest frequency on the serial monitor would change. </p>
+
+                                    <h3 class="mb-4 text-secondary">Additional Task (5000 - Level Students)</h3>
+                                    <img class="img-fluid rounded mb-3" src="assets/1a/c5_blink.png" alt="..."/>
+                                    <p class="mb-4">Using the example code from Task 5 as a template, I was able to program the Artemis board to react to the C note by blinking the on-board LED. Additionally, I checked the frequency of the C5 note using the Example1_MicrophoneOutput code, which showed a frequency of 526 Hz.</p>
+                                    
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/GDRuab635Uo?si=0o8lRLGy_H8F7p3E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                                    <p class="mb-4">Note: I used the Tuner Lite app on my phone to play the different musical notes.</p>
+
+                                    <!-- Lab 1B -->
+                                    <h2 class="mb-4 text-secondary">Lab 1B</h2>
+                                    <h3 class="mb-4 text-secondary">Prelab</h3>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/venv.png" alt="..."/>
+                                    <p class="mb-2">For the prelab, I set up a virtual environment called FastRobots_ble and installed the required packages in the environment using the command</p>
+                                    <code>pip install numpy pyyaml colorama nest_asyncio bleak jupyterlab</code>
+                                    <p></p>
+                                    <p class="mb-4">Note that Matplotlib was installed later in the lab!</p>
+                                    
+                                    <p class="mb-4">Afterward, I added the codebase to the folder and successfully started the Jupyter server.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/jupyter_server.png" alt="..."/>
+                                    <p class="mb-4">Lastly, I installed the ArduinoBLE library in the ArduinoIDE and flashed the ble_arduino.ino code from the codebase to the Artemis Nano board, which allowed the board to print its MAC address on the serial monitor.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/mac_address.png" alt="..."/>
+
+
+                                    <h3 class="mb-4 text-secondary">
+                                    Configurations</h3>
+                                    <p class="mb-4">Using the function uuid4(), I was able to generate a unique UUID.</p>
+                                    <img class="img-fluid rounded mb-3" src="assets/1b/uuid_address.png" alt="..."/>
+                                    <p class="mb-4">Then, I updated the files with the correct MAC and UUID addresses!</p>
+                                    <p class="mb-2">In connection.yaml</p>
+                                    <code>artemis_address: 'c0:07:80:99:a1:44'</code>
+                                    <p></p>
+                                    <code>ble_service: 'b6c05544-1f26-40f3-a096-4e730eb9f3d2'</code>
+                                    <p></p>
+                                    <p class="mb-2">In ble_ardruino.ino</p>
+                                    <code>#define BLE_UUID_TEST_SERVICE "b6c05544-1f26-40f3-a096-4e730eb9f3d2"</code>
+                                    <p></p>
+                                    <h3 class="mb-4 text-secondary">Task 1: ECHO</h3>
+                                    <p class="mb-4">For this task, I programmed the ECHO function so that when the robot (Artemis board) receives a string “Hi!!!” it would return “Robot says -> Hi!!!”</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_1.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 2: SEND_THREE_FLOATS</h3>
+                                    <p class="mb-4">For this task, I programmed the SEND_THREE_FLOATS function to return the three float values extracted from the command.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_2.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 3: GET_TIME_MILLIS</h3>
+                                    <p class="mb-4">For this task, I added a command GET_TIME_MILLIS that returns the time since the program started in milliseconds using the function millis().</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_3.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 4: Notification Handler</h3>
+                                    <p class="mb-4">For this task, I programmed the notif_handler function and added the start_notify function so that the program would automatically run the notif_handler function whenever the RX_STRING characteristics is updated.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_4.png" alt="..."/>
+                                    <p class="mb-4">With the notification handler, the robot can send commands to the computer without the computer initiating a command first. This is useful for the tasks below since we will be continuously receiving time and temperature data from the robot.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 5: Time Loop</h3>
+                                    <p class="mb-4">For this task, I created a command called LOOP_TIME that collects the time data on the robot and sends them to the computer for 3 seconds. For debugging purposes, I also printed the time to the serial monitor on the robot side.</p>
+                                    <p class="mb-4">Using a spreadsheet, I was able to calculate the effective data transfer rate.</p>
+                                    <p class="mb-4"><i>183 entries / (669857 ms - 666853 ms) = 0.0609 entries / ms = 60.9 entries / second</i></p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_5.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 6: Time Array</h3>
+                                    <p class="mb-4">For this task, I created a global variable array called time_stamp_array with a size of 30 on the robot side. Then, I created a command called SEND_TIME_DATA that stores 30 time data in the array and sends the data over to the computer once the robot finishes collecting data.</p>
+                                    <p class="mb-4"><i>Effective data transfer rate = 30 entries / (749290 ms - 749260 ms) = 1 entry / ms = 1000 entries / second</i></p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_6.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 7: Temperature Array</h3>
+                                    <p class="mb-4">For this task, I added another global variable array called temp_readings_array with a size of 30 on the robot side. Then, I created another command called GET_TEMP_READINGS that uses a similar logic as the SEND_TIME_DATA command, except that it is storing and sending data in two arrays (time + temperature) concurrently.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/task_7.png" alt="..."/>
+                                    <p class="mb-4">In order for the notification handler to parse the strings properly. I added indicators to the beginning of the data string that is being sent over from the robot. Therefore, since Task 6 is only sending the time data, I added “1” to the beginning of the string so that the computer knows that it is only expecting one data. Similarly, I added “2” to the beginning of the data string for Task 7 since the notification handler needs to parse the time and temperature data. By using If Else statements, the notif_handler function can identify different types of strings that the robot sends.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/get_temp_readings_code.png" alt="..."/>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">Task 8: Comparison between the Two Methods</h3>
+                                    <h3 class="mb-4 text-secondary"></h3>
+                                    <h6 class="mb-4 text-secondary">Method 1: Sends each data as it’s being collected</h6>
+                                    <ul>
+                                        <li><strong>Advantage:</strong> Requires less memory usage on the microcontroller board, which is important to consider since the Artemis Nano board doesn’t have a lot of memory.</li>
+                                        <li><strong>Disadvantage:</strong> Records data at a slower rate since the robot has to execute the send data code before recording the next data reading.</li>
+                                    </ul>
+                                    <h6 class="mb-4 text-secondary">Method 2: Stores data in an array first</h6>
+                                    <ul>
+                                        <li><strong>Advantage:</strong> Can record data at a higher rate.</li>
+                                        <li><strong>Disadvantage:</strong> Requires more memory usage on the microcontroller board since the robot has to store the array data. </li>
+                                    </ul>
+                                    <p class="mb-4">The first method records data at a rate of <strong>60.9 entries per second</strong>. In comparison, the second method records data at a rate of <strong>1000 entries per second</strong>, which is significantly faster than the first method. Note that the sample size for the second method is only 30 entries in comparison to the 183 entries for the first method.</p>
+
+                                    <h6 class="mb-4 text-secondary">How much data can we store before running out of memory?</h6>
+                                    <p class="mb-4">The Artemis board has 384 kB of RAM and each int has a size of 4 B.</p>
+                                    <p class="mb-4"><i>384 kB / 4kB = 96 int data</i></p>
+                                    <p class="mb-4">Therefore, we can store approximately 96 int type data on the board before running out of memory. However, it is important to note that other parts of the code would also take up memory on the board. So, the actual amount of data we can store would be smaller than 96.</p>
+
+                                    <h3 class="mb-4 text-secondary">Additional Task (5000 - Level Students)</h3>
+
+                                    <h5 class="mb-4 text-secondary">Task 1: Effective Data Rate And Overhead</h5>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/effective_data_rate_code.png" alt="..."/>
+                                    <p class="mb-4">Since each char is 1 Byte of data, I decided to use the message “hello” to collect the data rate for responses ranging from 5 bytes to 120 bytes. In the end, I was able to collect 24 data points and use the Matplotlib library to plot a scatter plot of response size vs. data rate.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/effective_data_rate_output.png" alt="..."/>
+                                    <p class="mb-4">According to the plot, the data rate and response size have a positive correlation.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/effective_data_rate_plot.png" alt="..."/>
+                                    <p class="mb-4">Therefore, the data rate of shorter responses is slower than the data rate of longer responses. This is because short packets introduce more overhead than larger packets. In conclusion, larger responses can help reduce overhead because it is effectively using the data transmission space.</p>
+
+                                    <h5 class="mb-4 text-secondary">Task 2: Reliability</h5>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/reliability_robot_code.png" alt="..."/>
+                                    <p class="mb-4">To test the reliability when the robot sends data at a higher rate, I added a command called RELIABILITY that sends over 1000 messages to the computer. In order to test a fast transmission rate, I made sure that there are no unnecessary codes in between each data transmission.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/1b/reliability_code_p1.png" alt="..."/>
+                                    <p class="mb-4">Afterward, I created a function to check if the computer read all 1000 messages sent from the robot correctly.</p>
+                                    <img class="img-fluid rounded mb-3" src="assets/1b/reliability_code_p2.png" alt="..."/>
+                                    <p class="mb-4">The results show that the communication between the computer and the robot is reliable!</p>
+
+                                    <h3 class="mb-4 text-secondary">Discussion</h3>
+                                    <p class="mb-4">Through this lab, I was able to get familiar with using the Artemis Nano board to communicate with the computer via BLE!</p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Nila Narayan and Mikayla Lahr’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
