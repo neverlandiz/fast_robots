@@ -79,6 +79,15 @@
                             <img class="img-fluid" src="assets/2/lab_2_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 3-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/3/lab_3_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -371,6 +380,136 @@
                                     <p class="mb-4">IMU: <a href="https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html">https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html</a></p>
                                     <p class="mb-4">Fourier Transform: <a href="https://www.alphabold.com/fourier-transform-in-python-vibration-analysis/">https://www.alphabold.com/fourier-transform-in-python-vibration-analysis/</a></p>
                                     <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Nila Narayan and Daria Kot’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Portfolio Modal 3-->
+         <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 3: Time of Flight Sensors</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 3 -->
+                                    <p class="mb-4">The goal of this lab is get familiar with using the ToF distance sensors!</p>
+                                    <h3 class="mb-4 text-secondary">Prelab</h3>
+                                    <p class="mb-4">According to the datasheet, the Time-of-Flight sensors should have an address of 0x56.</p>
+                                    <p class="mb-4">By using two ToF sensors, the robot can get distance readings from different perspectives. Since the two ToF sensors have the same default I2C address, we need to change the address for one of them in order to read data from both sensors simultaneously. I decided to use the approach that changes the address programmatically using the XSHUT pin on the ToF sensor. By wiring the XSHUT pin to a GPIO pin on the Artemis, we can turn off one of the sensors to change the address of the other. </p>
+                                    <p class="mb-4">I decided to put one in the front, and the other on the robot’s right side. This will help the robot detect obstacles/walls that are on its right side or in front of it, which will be useful for performing stunts. Due to only having 2 sensors, the robot won’t be able to detect obstacles that are on the left side or behind it. </p>
+                                    <h6 class="mb-4 text-secondary">Wiring Diagram</h6>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/wiring.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 1: Battery</h3>
+                                    <p class="mb-4">In order to power up the Artemis with a battery, I cut one of the 650 mAh battery and connected the wires to the JST jumper wires with solder and heat shrinks. To avoid shorting the battery, it is important to cut the wires one at a time. </p> 
+                                    <img class="img-fluid rounded mb-5" src="assets/3/battery.png" alt="..."/>
+                                    <p class="mb-4">Here is a video demonstrating that the battery is working properly. When the Artemis is powered by the battery, it can still communicate with the computer via Bluetooth. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/kiemxEqnxfk?si=tbMKez8Jk26CsefH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">Task 2: Connections</h3>
+                                    <p class="mb-4">Here is an image showing the connections of the sensors and the Artemis board. I decided to use the longer QWIIC cables for the ToF sensors so I could place them at the corresponding edges of the car.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/wiring_image.png" alt="..."/>
+                                    <p class="mb-4">According to the QWIIC connector guide, the blue wire corresponds to the SDA signal and the yellow wire corresponds to the SCL signal. In addition, I soldered a wire between the XSHUT pin of the right ToF sensor and the GPIO 7 pin on the Artemis board. This will be used for changing the I2C address later in this lab. </p>
+                                    
+                                    <h3 class="mb-4 text-secondary">Task 3: I2C Device</h3>
+                                    <p class="mb-4">Using the example code Example1_wire_I2C, the Artemis was able to scan for the I2C address of the ToF sensors. As shown in the image below, the program prints out 0x29 for the address.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/i2c_address.png" alt="..."/>
+                                    <p class="mb-4">As shown in this table below from the datasheet, the LSB of the I2C address is the R/W bit. Looking at the address without the R/W bit, it shows “0101 001”, which is equal to 0x29. Therefore, the output matches with the expected I2C address value.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/datasheet_i2c.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 4: Sensor Configurations</h3>
+                                    <p class="mb-4">There are 3 ToF sensor modes - short, medium and long. The maximum ranging distance is around 1.3 m for short mode, 3 m for medium mode, and 4 m for long mode. While the short mode has a smaller maximum ranging distance, it is the most insensitive to ambient light and has a maximum sampling rate of 50 Hz. The medium and long modes both have a maximum sampling rate of 30 Hz. Since the robot will be performing stunts and it will be difficult to find consistent lighting conditions, I decided to use the short sensor mode for my robot. </p>
+                                    <p></p>
+                                    <p class="mb-4">The minimum ranging distance of the sensors is 40 mm, which explains why the sensors aren’t recording data accurately for distances less than that. Since I’m using the short mode, the sensor range should be 40 mm - 1300 mm. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/mode_comparison_graph.png" alt="..."/>
+                                    <p class="mb-4">As shown in the plot, the short and long mode measurements are similar, but the short mode has better accuracy. </p>
+                                    <p></p>
+                                    <p class="mb-4">Since I’m using the short mode, the minimum timing budget should be 20 ms. I decided to test out four ranging times - 20 ms, 100 ms, 200 ms, and 300 ms - by taping the sensor to my laptop and take 100 measurements of the wall distance for each ranging time. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/ranging_time.png" alt="..."/>
+                                    <p class="mb-4">Looking at the graph, we can see that the data for 20 ms has the worst repeatability and accuracy and the data for 200 ms has the best. Therefore, I decided to use 200 ms for the sensors.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 5: Two ToF Sensors</h3>
+                                    <p class="mb-4">Below is the code that I used for changing the I2C address and the serial output confirming that the two sensors have different addresses. Using the XSHUT method mentioned in the prelab, I changed the I2C address of the front ToF sensor to 0x39. Note that the output address value is in decimal format.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/address_change.png" alt="..."/>
+                                    <p class="mb-4">The front ToF sensor now has an address of 0x39 (57 in decimal), while the right ToF sensor’s address is 0x52 (82 in decimal).</p>
+                                    <p class="mb-4">Here is a video demonstrating that the two sensors are working in parallel and correctly. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7PU2nim9dTk?si=gX-FTIMpbB9LtO6i" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">Task 6: ToF Sensor Speed</h3>
+                                    <p class="mb-4">To test the sensor speed, I programmed the Artemis to print out the time as fast as possible, while using the checkForDataReady() function to print out the sensor data only when it’s available. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/fast_data_time.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/fast_data.png" alt="..."/>
+                                    <p class="mb-4">As shown in the image, the loop is executing at around</p>
+                                    <p class="mb-4"><i>36 / (60188 - 59967) = 0.163 loops / ms = 163 loops / second</i></p>
+                                    <p class="mb-4">The sensor is collecting data at a rate of </p>
+                                    <p class="mb-4"><i>4 / (60188 - 59994) = 0.021 data / ms = 21 data / second</i></p>
+                                    <p class="mb-4">In comparison, the loop is executing at a rate a lot faster than the sensor is collecting data. The current limiting factor of the ToF sensors is due to the program needing to wait for the data of both sensors to become available before it can print out the distance data.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task 7: Time vs. Distance and Time vs. Angle</h3>
+                                    <p class="mb-4">I modified the code from the previous lab where I recorded the IMU data over 5 seconds and sent it via Bluetooth to include the data for the two ToF sensors. Using the code, I was able to record the IMU data and ToF data simultaneously and plot them using Matplotlib. In addition, the IMU data that I used is the complementary filtered data since I will be using this data in future labs. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/tof.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/imu.png" alt="..."/>
+                                    <p class="mb-4">As shown in the graphs, the IMU and ToF both outputted fairly consistent values throughout the 5 second period. There is a slight drift for the yaw value since it isn’t filtered. </p>
+                                    
+                                    <h3 class="mb-4 text-secondary">Additional Task (5000 - Level Students)</h3>
+
+                                    <h5 class="mb-4 text-secondary">Task 1: Infrared Transmission Based Sensors Discussion</h5>
+                                    <p class="mb-4">Here are some of the pros and cons of different common IR sensors. </p>
+                                    <h6 class="mb-4 text-secondary">IR Time-of-Flight Sensor</h6>
+                                    <ul>
+                                        <li><strong>Pro:</strong> Insensitive to color, texture, and ambient light</li>
+                                        <li><strong>Con:</strong> Low sample rate and complicated processing</li>
+                                    </ul>
+                                    <h6 class="mb-4 text-secondary">Ultrasonic Sensor</h6>
+                                    <ul>
+                                        <li><strong>Pro:</strong> Insensitive to color and ambient light</li>
+                                        <li><strong>Con:</strong> Sensitive to humidity and complicated processing</li>
+                                    </ul>
+                                    <h6 class="mb-4 text-secondary">Amplitude-Based IR Sensor</h6>
+                                    <ul>
+                                        <li><strong>Pro:</strong> Cheap and high sample rate</li>
+                                        <li><strong>Con:</strong> Sensitive to ambient light and reflectivity of objects</li>
+                                    </ul>
+                                    <h6 class="mb-4 text-secondary">IR Trinagulation Sensor</h6>
+                                    <ul>
+                                        <li><strong>Pro:</strong> Insensitive to color and texture</li>
+                                        <li><strong>Con:</strong> Expensive and sensitive to ambient light</li>
+                                    </ul>
+                                    <p class="mb-4">The one we are using for the robot is the ToF IR sensor, which measures the distance by emitting a pulse-modulated signal and recording the time it takes for the signal to return. It uses the equation <i>distance = time * speed_of_light / 2.</i></p>
+
+                                    <h5 class="mb-4 text-secondary">Task 2: Sensitivity of Sensors</h5>
+                                    <p class="mb-4">To compare the sensitivity of the sensors to different colors and textures, I used a few objects that are in my room - light blue flash card, dark blue flash card, white cardboard box, white glossy folder, pink plastic correction tape. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/3/sensitivity_graph.png" alt="..."/>
+                                    <p class="mb-4">As shown in the plot, the measurements of different materials are similar because the ToF sensor is insensitive to colors and textures. Since I’m using short mode, the sensors should be insensitive to ambient lighting as well. Note that the data can vary due to the lighting in my room and human error (I was holding the sensor and objects with my hand). </p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">QWIIC: <a href="https://www.sparkfun.com/sparkfun-qwiic-multiport.html">https://www.sparkfun.com/sparkfun-qwiic-multiport.html</a></p>
+                                    <p class="mb-4">ToF: <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf</a></p>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Wenyi Fu and Daria Kot’s websites!</p>
                                     <p></p>
                                     
                                     <div style="display: flex; align-items: center; justify-content: center;">
