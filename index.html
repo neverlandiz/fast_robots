@@ -97,6 +97,15 @@
                             <img class="img-fluid" src="assets/4/lab_4_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 5-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal5">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/5/lab_5_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -658,6 +667,114 @@
                                     <p></p>
 
                                     <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Motor Drivers: <a href="https://www.digikey.com/en/products/detail/pololu-corporation/2130/10450426">https://www.digikey.com/en/products/detail/pololu-corporation/2130/10450426</a></p>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Wenyi Fu, Mikayla Lahr, and Nila Narayan’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 5-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" aria-labelledby="portfolioModal5" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 5: Linear PID control and Linear interpolation</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 5 -->
+                                    <p class="mb-4">The goal of this lab is to understand and implement PID control to the Robot!</p>
+                                    <h3 class="mb-4 text-secondary">Prelab</h3>
+                                    <h6 class="mb-4 text-secondary">Bluetooth</h6>
+                                    <p class="mb-4">To make the PID tuning process easier, I created a PID command to handle sending and receiving PID data over Bluetooth. Additionally, to avoid having to change the code on the Artemis repeatedly, I added duration, target distance, KP, KI, and KD parameters to the PID command so that I could change the values via Bluetooth on my computer.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/bluetooth_jupyter.png" alt="..."/>
+
+                                    <p class="mb-4 text-secondary">The PID command sends over parameters and turns on the start_pid flag that allows the robot to begin executing the task. Upon finishing the task, the robot will send over all the data collected.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/bluetooth_arduino.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 1: Position Control</h3>
+                                    <p class="mb-4">The goal of this lab is to program the robot to drive towards a wall and stop at exactly 1 ft (304 mm) away from the wall using PID control. Note that I’m using 324 mm instead of 304 for the setpoint due to the position of the front sensor of my car. As shown in the image, I added an extra 20 mm to account for the distance between the sensor and the robot’s front wheels.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/car.png" alt="..."/>
+                                    <h6 class="mb-4 text-secondary">P/I/D Discussion</h6>
+                                    <p class="mb-4">From the lectures, we learned about PID control (Proportional - Integral - Derivative). The equation is shown below, where the error is the distance between the robot and the setpoint distance (in this case it’s 1 ft). A positive PID output means that the robot is still too far from the wall, while a negative PID output means that the robot is too close to the wall and needs to back up.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/pid_equation.png" alt="..."/>
+                                    <p class="mb-4">The range of motor input values (PWM) is around 30 - 255 based on the deadband observations in Lab 4. The range of the ToF sensor (long mode) is approximately 40 mm to 4000 mm. Therefore, a reasonable range of the proportional controller gain should be around 0.128 if I want the robot to be going at 100% speed when it’s 2000 mm away from the wall (255 / 2000 = 0.128).</p>
+                                    <p class="mb-4">To deal with the deadband range of the motors and adapt to different starting points, I set a max and min limit for my motor speed.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/deadband_code.png" alt="..."/>
+
+                                    <h6 class="mb-4 text-secondary">Range/Sampling Time Discussion</h6>
+                                    <p class="mb-4">I’m using the long ToF sensor mode for this lab since we want to drive towards the wall from a distance. Short mode wouldn’t be sufficient since the maximum ranging distance is around 1.3 m. In Lab 3, I set the timing budget for my ToF sensors to be 200 ms to optimize accuracy. However, I decided to lower the accuracy for a fast sampling rate. According to the datasheet, the minimum timing budget for long mode is 33 ms. Therefore, I ended up using 33 ms for the timing budget and 40 ms for the intermeasurement period. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/tof_configuration_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 2: Tuning Process</h3>
+                                    <p class="mb-4">For the tuning process, I decided to follow the Heuristic Procedure #2 from Lecture 7 Slides. First, I tried out different KP values, while setting KD and KI to 0. I ended up picking 0.06 as a good KP value. Surprisingly, the robot barely showed any oscillations.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/p_tof_graph.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/p_motor_graph.png" alt="..."/>
+                                    <p class="mb-4">Then, I tried implementing the integrator, which can reduce oscillations. I ended up picking 0.0001 as a good KI value. As shown in the graph, the robot overshoots around 60000 ms.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/i_tof_graph.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/i_motor_graph.png" alt="..."/>
+                                    <p class="mb-4">Lastly, I tried tuning KD. During this process, I realized that the robot is moving relatively slowly. The motor input vs. time graphs showed a max range of 50 pwm. Therefore, I decided to increase the maximum motor pwm input from 100 to 160 and increase the KP to 0.1 to speed up the robot. Since KD helps with overshoots, I slowly increased the KD value until the robot stopped showing signs of overshooting.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/d_tof_graph.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/d_motor_graph.png" alt="..."/>
+                                    <p class="mb-4">The parameters that I ended up using are KP = 0.1, KI = 0.0001, KD = 25.</p>
+                                    <p class="mb-4">Afterwards, I implemented the extrapolation calculations to my program. Earlier, the robot used the last savepoint whenever new data wasn’t ready. </p>
+
+                                    <h3 class="mb-4 text-secondary">Task 3: Extrapolation</h3>
+                                    <p class="mb-4">Using the ToF configurations I did in Task 1, the ToF sensors can return new data around every 40 ms.</p>
+                                    <p class="mb-4">In order to have the robot running without having to always wait for the ToF sensor data, extrapolation calculations were used to estimate the current car distance using past measured data. Using this method, we can avoid using blocking statements and ensure fast loop times.</p>
+                                    <p class="mb-4">Here is a diagram showing how extrapolation calculations work.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/extrapolation_calculation.png" alt="..."/>
+                                    <p class="mb-4">In summary, for each robot loop, the program either gets the distance data from the ToF sensor or uses the estimated distance data calculated using extrapolation. Afterwards, the program uses the distance data to calculate the PID control for the motors. Therefore, the PID control on the robot would run faster than the rate that the ToF sensor is generating data. Based on the output time stamps of my experiments, the main loop is looping every 9.1 ms.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/extrapolation_code.png" alt="..."/>
+                                    <p class="mb-4">After some testing and discussion with the TAs, I decided to do extrapolation on the past 3 data points instead of 2. By taking the mean of the two extrapolated calculations, I can ensure a more stable distance estimation. Using this method, I didn’t need to include a low pass filter in the derivative branch or worry about the derivative kick. Here is a graph showing the ToF data vs. the Extrapolated Estimations.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/extrapolated_vs_tof.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Task 4: Results</h3>
+                                    <p class="mb-4">After adding extrapolation to the system, I repeated the tuning process and ended up with KP = 0.15, KI = 0.0002, KD = 60. The maximum linear speed that I was able to achieve was 331 mm/s.</p>
+                                    <p class="mb-4"><i>(875.093 - 330.248) mm / (402284 - 400608) ms = 0.331 mm/ms = 331 mm/s</i></p>
+                                    <p class="mb-4">To demonstrate reliability, I repeated the experiment with those parameters for multiple trials. Here are 3 videos showing the robot stopping 1 ft away from the wall.</p>
+                                    <h6 class="mb-4 text-secondary">First Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/lhqbG4KuZpA?si=EOs3e2UGHV_vRXYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <h6 class="mb-4 text-secondary">Second Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7s050BvURNw?si=NXzzIuGAh1M24V21" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <h6 class="mb-4 text-secondary">Third Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/nf00iRJd08E?si=eii9R18inaUao2F1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">Additional Task (5000 - Level Students)</h3>
+                                    <h5 class="mb-4 text-secondary">Task 1: Wind-Up Protection for Integrator</h5>
+                                    <p class="mb-4">Since the robot is very sensitive to the integrator, it’s important to limit its value. Initially, I tested the robot without wind-up protection, and it led to the robot making sudden and fast movements due to the accumulated error. The robot ended up running toward the wall at full speed, resulting in it flipping over. When getting too close to the wall, the robot would reverse back a lot when it only needed to move back slightly. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/pid_code.png" alt="..."/>
+                                    <p class="mb-4">After testing, I decided to set the limit at -100 and 100 for the wind-up protection. As shown in the graph, although the robot’s error is high (robot is far away from the wall), the integrator is limited between -100 and 100. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/5/wind_up_graph.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Discussion</h3>
+                                    <p class="mb-4">An idea to improve my robot’s performance in the future is to use active braking instead of coasting. This way the robot could stop in front of the wall at a faster pace. </p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">ToF: <a href="https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf">https://cdn.sparkfun.com/assets/8/9/9/a/6/VL53L0X_DS.pdf</a></p>
                                     <p class="mb-4">Motor Drivers: <a href="https://www.digikey.com/en/products/detail/pololu-corporation/2130/10450426">https://www.digikey.com/en/products/detail/pololu-corporation/2130/10450426</a></p>
                                     <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Wenyi Fu, Mikayla Lahr, and Nila Narayan’s websites!</p>
                                     <p></p>
