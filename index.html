@@ -115,6 +115,15 @@
                             <img class="img-fluid" src="assets/6/lab_6_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 7-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal7">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/7/lab_7_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -914,6 +923,110 @@
                                     <p class="mb-4">IMU: <a href="https://www.digikey.com/en/products/detail/pimoroni-ltd/PIM448/10246391">https://www.digikey.com/en/products/detail/pimoroni-ltd/PIM448/10246391</a></p>
                                     <p class="mb-4">DMP: <a href="https://fastrobotscornell.github.io/FastRobots-2025/tutorials/dmp.html">https://fastrobotscornell.github.io/FastRobots-2025/tutorials/dmp.html</a></p>
                                     <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner and Mikayla Lahr websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio Modal 7-->
+        <div class="portfolio-modal modal fade" id="portfolioModal7" tabindex="-1" aria-labelledby="portfolioModal7" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 7: Kalman Filter</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 7 -->
+                                    <p class="mb-4">The goal of this lab is to understand how to implement Kalman Filters to supplement slowly sampled ToF sensor data.</p>
+
+                                    <h3 class="mb-4 text-secondary">Part 1: Estimate Drag and Momentum</h3>
+                                    <p class="mb-4">To estimate the drag and momentum of the system, I recorded the ToF sensor and time stamp data as the robot drove towards a wall at a constant input motor speed. </p>
+                                    <p class="mb-4">I added a command “DRAG_AND_MOMENTUM” that sets the motor input and drives the robot towards the wall until it’s 1000 mm away. This is to prevent the robot from crashing into the wall and breaking. Once the robot reaches 1000 mm from the wall, it stops and sends over the recorded data.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/drag_and_momentum_code.png" alt="..."/>
+                                    
+                                    <h6 class="mb-4 text-secondary">Graphs</h6>
+                                    <p class="mb-4">Here are the graphs from the data that I recorded. Note that I converted the time stamps from ms to s.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/motor_input_graph.png" alt="..."/>
+                                    <p class="mb-4">The step response that I chose is u(t) = 150, which is around 58% of the maximum (255).</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/tof_sensor_data.png" alt="..."/>
+                                    <p class="mb-4">To determine the steady state speed, I calculated the slop of the last few ToF sensor data. Below is the code snippet showing the calculations.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/steady_state_calculations_code.png" alt="..."/>
+                                    <p class="mb-4">Then, using the calculated slope/steady state speed, I plotted the linear line over the ToF sensor graph to confirm the calculations are correct.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/slope_check_code.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/tof_with_steady_state_speed.png" alt="..."/>
+                                    <p class="mb-4">Using this method, I estimated the steady state speed to be around 2.891 m/s.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/velocity_graph.png" alt="..."/>
+                                    <p class="mb-4">Using the velocity graph, I estimated that the 90% rise time is around 0.864 seconds and the 90% rise time speed is around 1.73 m/s.</p>
+
+                                    <h6 class="mb-4 text-secondary">Calculations</h6>
+                                    <p class="mb-4">The calculations for estimating drag is shown below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/drag_calculations.png" alt="..."/>
+                                    <p class="mb-4">The calculations for estimating momentum is shown below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/momentum_calculations.png" alt="..."/>
+                        
+                                    <h3 class="mb-4 text-secondary">Part 2: Initialize KF</h3>
+                                    <p class="mb-4">According to the recorded time stamps, the sampling time (Delta_T) of the experiment is around 0.0366 data/second. In addition, the dimensions of the state space is 2 since we're measuring the distance and velocity of the system.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/initialize.png" alt="..."/>
+                                    <p class="mb-4">Plugging in the drag and momentum values found in part 1, I was able to calculate Matrix A and B.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/a_and_b_matrix.png" alt="..."/>
+                                    <p class="mb-4">Here is the code snippet that I used to calculate matrices Ad and Bd.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/a_and_b_calculations.png" alt="..."/>
+                                    <p class="mb-4">Results are shown below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/ad_and_bd_matrix.png" alt="..."/>
+                                    <p class="mb-4">For the noise covariances, sigma_1 is the distance process noise, sigma_2 is the velocity process noise, and sigma_3 is the ToF sensor data noise. Therefore, using those parameters, we can define Sigma_u (confidence in model) and Sigma_z (confidence in ToF data).</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/confidence_code.png" alt="..."/>
+                                    <p class="mb-4">To calculate sigma_1 and sigma_2, I used the equation in the Lecture 13 slides and got the values shown below. For sigma_3, I decided to use around 10 for the measurement noise based on my observations of the ToF sensor.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/sigma_calculations.png" alt="..."/>
+                                    <p class="mb-4">Note that we’re using a diagonal matrix because we’re assuming uncorrelated noise.</p>
+
+                                    <h3 class="mb-4 text-secondary">Part 3: Implement and Test your Kalman Filter in Jupyter</h3>
+                                    <p class="mb-4">To test the parameters that I decided on in the previous two parts, I simulated the KF in Jupyter first.</p>
+                                    <p class="mb-4">Here is the code I used for writing the Kalman Filter function.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_code.png" alt="..."/>
+                                    <p class="mb-4">Next, I scaled the motor input data to match the step response u(t) that I picked in part 1 and looped through the data while calling the Kalman Filter.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_simulation_code.png" alt="..."/>
+                                    <p class="mb-4">As shown in the graph below, the Kalman Filter output was able to estimate the system state accurately.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_simulation_graph.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Part 4: Implement the Kalman Filter on the Robot</h3>
+                                    <p class="mb-4">In this section, I implemented the Kalman Filter code on the robot to replace the linear extrapolation code.</p>
+                                    <p class="mb-4">First, I declared the parameters from part 1 and part 2 as global variables.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_robot_parameters.png" alt="..."/>
+                                    <p class="mb-4">Then, I added the Kalman Filter function code, with the same implementations as part 3.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_robot_code.png" alt="..."/>
+                                    <p class="mb-4">Lastly, I replaced the linear extrapolation code from Lab 5 with the KF code. The code snippet below shows the main loop code when ToF sensor data is not available.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_robot_main_loop.png" alt="..."/>
+
+                                    <p class="mb-4">Here is a video showing the robot performing linear PID control with Kalman Filter.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Gl6W0v-5b1k?si=0dITsMpI0aXuUMvX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <p class="mb-4">Here is a graph showing the comparison between the ToF sensor data and the Kalman Filter outputs. As shown in the graph, the KF output follows the ToF trend relatively well.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/kf_robot/kf_output.png" alt="..."/>
+
+                                    
+               
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
                                     <p></p>
                                     
                                     <div style="display: flex; align-items: center; justify-content: center;">
