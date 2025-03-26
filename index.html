@@ -995,6 +995,9 @@
                                     <img class="img-fluid rounded mb-5" src="assets/7/ad_and_bd_matrix.png" alt="..."/>
                                     <p class="mb-4">For the noise covariances, sigma_1 is the distance process noise, sigma_2 is the velocity process noise, and sigma_3 is the ToF sensor data noise. Therefore, using those parameters, we can define Sigma_u (confidence in model) and Sigma_z (confidence in ToF data).</p>
                                     <img class="img-fluid rounded mb-5" src="assets/7/confidence_code.png" alt="..."/>
+                                    <p class="mb-4">Therefore, if we put a lot of trust in the sensor data, the KF output would end up matching both the accuracte and noisy the sensor data. On the other hand, if we put too much trust in the model, the KF output would end up deviating from the accurate measurements.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/7/trust_model.png" alt="..."/>
+                                    <p class="mb-4">This graph simulates when there is a lot of trust in the model (sigma_1 = sigma_2 = 1, sigma_3 = 30). As shown in the graph above, even though the KF output follows the ToF data's overall trend, there is significant drift, causing the values to be incorrect.</p>
                                     <p class="mb-4">To calculate sigma_1 and sigma_2, I used the equation in the Lecture 13 slides and got the values shown below. For sigma_3, I decided to use around 10 for the measurement noise based on my observations of the ToF sensor.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/7/sigma_calculations.png" alt="..."/>
                                     <p class="mb-4">Note that we’re using a diagonal matrix because we’re assuming uncorrelated noise.</p>
