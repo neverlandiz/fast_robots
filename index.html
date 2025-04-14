@@ -124,6 +124,24 @@
                             <img class="img-fluid" src="assets/7/lab_7_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 8-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/8/lab_8_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
+                    <!-- Lab Item 9-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal9">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/9/lab_9_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1045,6 +1063,104 @@
                 </div>
             </div>
         </div>
+
+         <!-- Portfolio Modal 8-->
+         <div class="portfolio-modal modal fade" id="portfolioModal8" tabindex="-1" aria-labelledby="portfolioModal8" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 8: Stunts! (Drift)</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 8 -->
+                                    <p class="mb-4">The goal of this lab is to implement a fast stunt, either a flip or drift. For this lab, I decided to implement drift on my robot to better understand orientation control.</p>
+
+                                    <h3 class="mb-4 text-secondary">Task B: Drift</h3>
+                                    <p class="mb-4">For the drift stunt, we want the robot to drive fast forward toward the wall, perform a 180 degree turn when it's within 3ft from the wall, and then drive back to the starting line.</p>
+                                    <p class="mb-4">Since I already have orientation PID control implemented in Lab 6, I was able to use it for this lab. The software logic for my drift stunt is shown below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/8/drift_code.png" alt="..."/>
+                                    <p class="mb-4">The STUNTS command sent from the computer sets the start_stunts flag to 1 and drift_flag to 0. When drift_flag is 0, it corresponds to the first section of the stunt - driving forward. When drift_flag is 1, it corresponds to the second section - drift. Lastly, when drift_flag is 2, it corresponds to the third section - drive back to starting line.</p>
+                                    <p class="mb-4">Here is the code showing how the STUNTS command initializes variables.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/8/stunts_command_code.png" alt="..."/>
+
+                                    <p class="mb-4">In addition, I added a Low-Pass Filter to my PID control derivative term to prevent derivative kicks.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/8/lpf_code.png" alt="..."/>
+
+                                    <p class="mb-4">In terms of hardware implementation, I taped the wheels to reduce friction so that the robot can drift more smoothly.</p>
+
+                                    <h3 class="mb-4 text-secondary">Results</h3>
+                                    <p class="mb-4">Here are videos and graphs of the three successful drift runs. The tiles on the floor have a width of around 2 ft. Therefore, every 1.5 rectangular tile is around 3 ft. Note that the DMP graph output jumped from around -180 to 180 due to the DMP's range of [-180, 180]. </p>
+                                    <h6 class="mb-4 text-secondary">First Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/6Qpq2B_EZ6g?si=yPaike1pFaYxhwPE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/first_run/dmp.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/first_run/motor_input.png" alt="..."/>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="mb-4 text-secondary">Second Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/j_qf9GkgfVA?si=jILA6StuZ9tjKzFq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/second_run/dmp.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/second_run/motor_input.png" alt="..."/>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="mb-4 text-secondary">Third Run</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7vuZVG6GmNM?si=vrXcU4HdLu-qjJoT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/third_run/dmp.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/8/third_run/motor_input.png" alt="..."/>
+                                        </div>
+                                    </div>
+                                    <p class="mb-4">For the videos, it took around 2.5 seconds to perform the entire stunt. (Distance between the two tapes is approximately 3 ft)</p>
+          
+                                    
+                                    <h3 class="mb-4 text-secondary">Bloopers!</h3>
+                                    <p class="mb-4">Here is a video of my blooper. The robot wouldn't stop spinning once it entered the drifting PID control part, and it reminded me of beyblades. Beyblades are customizable spinning tops that can be used for battling. It also has a cartoon series, which is where I got the starting clip from!</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/cR8FdxOrnFI?si=kB69bXMCZ_2p5uuQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                    
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
