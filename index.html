@@ -142,6 +142,15 @@
                             <img class="img-fluid" src="assets/9/lab_9_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 10-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal10">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/10/lab_10_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1142,6 +1151,176 @@
                                     <p class="mb-4">Here is a video of my blooper. The robot wouldn't stop spinning once it entered the drifting PID control part, and it reminded me of beyblades. Beyblades are customizable spinning tops that can be used for battling. It also has a cartoon series, which is where I got the starting clip from!</p>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/cR8FdxOrnFI?si=kB69bXMCZ_2p5uuQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                     <p></p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- Portfolio Modal 9-->
+         <div class="portfolio-modal modal fade" id="portfolioModal9" tabindex="-1" aria-labelledby="portfolioModal9" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 9: Mapping</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 9 -->
+                                    <p class="mb-4">The goal of this lab is to use the robot to build a map of the lab environment. There are three ways to implement this lab - open loop, PID control on orientation, and PID control on angular speed. I decided to do the second option, PID control on orientation, with the DMP values.</p>
+
+                                    <p class="mb-4">Here is an image of the lab environment.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/lab.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Orientation Control</h3>
+                                    <p class="mb-4">In order to map the room, we need the robot to slowly do on-axis turns at each marked positions in the lab space.</p>
+                                    
+                                    <h6 class="mb-4 text-secondary">Software Implementation</h6>
+                                    <p class="mb-4">First, I created a function "record_front_tof_data" that takes 20 ToF sensor measurements and computes the average value. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/tof_code.png" alt="..."/>
+
+                                    <p class="mb-4">Then, I modified my orientation PID code to call the "record_front_tof_data" function and increment the setpoint by 20 degrees each time it reaches the setpoint.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/pid_code.png" alt="..."/>
+
+                                    <p class="mb-4">Since the DMP has a range of [-180, 180], I added this piece of code to the pid computation function to deal with the jump between 180 and -180.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/jump_code.png" alt="..."/>
+
+                                    <p class="mb-4">Here are the graphs of the orientation setpoint and PID data, showing that the PID controller works as expected.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/9/mapping_pid_graph.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/9/mapping_setpoint_graph.png" alt="..."/>
+                                        </div>
+                                    </div>
+
+                                    <p class="mb-4">Here is a video showing that the robot can turn roughly on axis.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/5gllReTMeTo?si=YDrR2WXkgqnedWq-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h6 class="mb-4 text-secondary">Error Discussion</h6>
+                                    <p class="mb-4">The front ToF sensor is located approximately 7 cm away from the center of the robot. Additionally, in the video above, the robot seems to be pushed slightly backwards when it's turning. Due to the location of the ToF sensor and how the robot was rotating, I estimated that the average error would be around 5 cm and the maximum error would be around 7 cm.</p>
+                                    <p class="mb-4">In terms of angular error, I estimated the average error to be around 4 degrees and the maximum error to be around 10 degrees based on the yaw and setpoint data I recorded.</p>
+                                
+                                    <h6 class="mb-4 text-secondary">Hardware Implementation</h6>
+                                    <p class="mb-4">In terms of hardware implementation, I taped the wheels to reduce friction so that the robot can turn slowly.</p>
+
+
+                                    <h3 class="mb-4 text-secondary">Polar Coordinate Plot</h3>
+                                    <p class="mb-4">With the implementation mentioned above, the robot rotates with a step size of 20 degrees, meaning that it takes 18 measurements per rotation.</p>
+                                    <p class="mb-4">There are four marked positions in the lab space: (-3, -2), (5, 3), (0, 3), (5, -3). Note that the coordinates are in ft.</p>
+
+                                    <p class="mb-4">As a sanity check, I plotted the polar coordinate plots of the ToF sensor reading at each marked position.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/polar_graphs/graph_1.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/polar_graphs/graph_2.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/polar_graphs/graph_3.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/polar_graphs/graph_4.png" alt="..."/>
+
+                                    <p class="mb-4">To ensure that the scans are precise, I did multiple runs to compare the results. As shown in the plot below, the measurements are shown to be consistent across runs.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/polar_graphs/compare.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Merge and Plot Readings</h3>
+                                    <p class="mb-4">To convert the ToF measurements to the inertial reference frame of the room, we need to compute the transformation matrices of the measurements.</p>
+                                    <p class="mb-4">Since the robot is rotating around the Z-axis, the rotation matrix is applied to the angle measurements (in radians).</p>
+                                    <p class="mb-4">Setpoint Array (in degrees) = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180, -160, -140, -120, -100, -80, -60, -40, -20, 0]</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/rotation_matrix.png" alt="..."/>
+
+                                    <p class="mb-4">Using the rotation matrix and gathered ToF data, we can compute the homogeneous transformation matrix using the equation below. The d variable corresponds to the ToF sensor data.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/transformation_matrix.png" alt="..."/>
+
+                                    <p class="mb-4">Here is the merged plot of the four datasets.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/mapping_scatter_plot.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Convert to Line-Based Map</h3>
+                                    <p class="mb-4">Using the mapping scatter graph plotted in the previous section, I converted the map into a line-based map for the simulator. The purple stars indicate the marked positions.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/map_with_line.jpg" alt="..."/>
+                                    <p class="mb-4">Based on the lines that I drew, I estimated end points below.</p>
+                                    <p class="mb-4">Start List = [(-5, -4), (-0.5, -4), (-0.5, -2), (1, -2), (1, -4), (6.5, -4), (6.5, 4.5), (-1.5, -4.5), (-1.5, 0.5), (-5, 0.5), (1.5, 0.5), (1.5, 3), (3.8, 3)]</p>
+                                    <p class="mb-4">End List = [(-0.5, -4), (-0.5, -2), (1, -2), (1, -4), (6.5, -4), (6.5, 4.5), (-1.5, -4.5), (-1.5, 0.5), (-5, 0.5), (1.5, 0.5), (1.5, 3), (3.8, 3), (3.8, 0.5)]</p>
+
+
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Modal 10-->
+        <div class="portfolio-modal modal fade" id="portfolioModal10" tabindex="-1" aria-labelledby="portfolioModal10" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 10: Grid Localization Using Bayes Filter</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 9 -->
+                                    <p class="mb-4">The goal of this lab is to implement grid localization using Bayes Filter!</p>
+
+                                    <h3 class="mb-4 text-secondary">Bayes Filter Algorithm</h3>
+
+                                    <h3 class="mb-4 text-secondary">Compute Control</h3>
+                                    <p class="mb-4"></p>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/compute_control_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Odometry Motion Model</h3>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/motion_model_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Prediction Step of the Bayes Filter</h3>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/prediction_step_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Sensor Model P(Z|X)</h3>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/sensor_model_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Update Step of the Bayes Filter</h3>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/update_step_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Comparison</h3>
 
                                     <h3 class="mb-4 text-secondary">References</h3>
                                     <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
