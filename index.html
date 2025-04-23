@@ -1335,7 +1335,7 @@
                                     <p class="mb-4">To optimize the computation time, I added an if statement to skip grid cells in the inner loops that have a probability of less than 0.0001 because states with low probabilities won't have significant impact on the belief.</p>
 
                                     <h3 class="mb-4 text-secondary">Sensor Model P(Z|X)</h3>
-                                    <p class="mb-4">This function computes the conditional probability p(zt|xt) based on the true observations for the robot poses. This will be used during the update step.</p>
+                                    <p class="mb-4">This function computes the conditional probability p(zt|xt) based on the true observations for the robot poses. Similar to the motion model, I used the Gaussian Distribution function in the BaseLocalization class to compute the probability. This will be used during the update step.</p>
                                     <p class="mb-4">Note that OBS_PER_CELL is in mapper, not loc.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/sensor_model_code.png" alt="..."/>
 
