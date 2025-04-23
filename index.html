@@ -1251,6 +1251,9 @@
                                     <p class="mb-4">Using the rotation matrix and gathered ToF data, we can compute the homogeneous transformation matrix using the equation below. The d variable corresponds to the ToF sensor data.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/9/transformation_matrix.png" alt="..."/>
 
+                                    <p class="mb-4">Here is the function I wrote for computing the matrix. Note that I added 70 to the tof_data to account for the placement of the ToF sensor relative to the center of the car.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/9/transform_code.png" alt="..."/>
+
                                     <p class="mb-4">Here is the merged plot of the four datasets.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/9/mapping_scatter_plot.png" alt="..."/>
 
@@ -1303,28 +1306,57 @@
                                     <p class="mb-4">The goal of this lab is to implement grid localization using Bayes Filter!</p>
 
                                     <h3 class="mb-4 text-secondary">Bayes Filter Algorithm</h3>
+                                    <p class="mb-4">The Bayes Filter algorithm is shown below. Given the sensor model p(zt|xt), action model p(xt|ut, xt-1), and initial conditions p(x0), the algorithm computes the state of the dynamic system and the belief (posterior of the state).</p>
+
+                                    <img class="img-fluid rounded mb-5" src="assets/10/bayes_filter_algorithm.png" alt="..."/>
+                                    <p class="mb-4">For each iteration, there is a prediction step and an update step. The prediction step uses the control data to increase uncertainty in the belief. On the other hand, the update step uses the observation data to reduce uncertainty in the belief.</p>
+                                    <p class="mb-4">To implement the algorithm, the lab tasks include programming the helper functions in the following sections.</p>
 
                                     <h3 class="mb-4 text-secondary">Compute Control</h3>
-                                    <p class="mb-4"></p>
+                                    <p class="mb-4">Here are the equations used to compute the control parameters.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/odom_model_param_equations.png" alt="..."/>
+
+                                    <p class="mb-4">This function computes the control information (initial rotation, translation, and final rotation) based on the current and previous odometry poses. The current pose and previous poses are in the format of (X, Y, Yaw Angle). Note that we are normalizing delta_rot_1 and delta_rot_2 to (-180, 180).</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/compute_control_code.png" alt="..."/>
 
+                                    <p class="mb-4">Here is a visualization of relative odometry motion.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/odom_model_param.png" alt="..."/>
+                                    
+
                                     <h3 class="mb-4 text-secondary">Odometry Motion Model</h3>
+                                    <p class="mb-4">This function computes the conditional probability p(xt|ut, xt-1) based on the current pose, previous pose, and control data. This will be used during the prediction step. Here is the algorithm for the motion model.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/10/odom_model_algo.png" alt="..."/>
+                                    <p class="mb-4">To model the noisy control data, I used the Gaussian Distribution function in the BaseLocalization class.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/motion_model_code.png" alt="..."/>
 
                                     <h3 class="mb-4 text-secondary">Prediction Step of the Bayes Filter</h3>
+                                    <p class="mb-4">This function updates the probabilities in bel_bar based on the odometry model parameters. It traverses through the grid for both the current and previous poses. This is line 3 in the Bayes Filter Algorithm mentioned in the beginning of this report.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/prediction_step_code.png" alt="..."/>
+                                    <p class="mb-4">To optimize the computation time, I added an if statement to skip grid cells in the inner loops that have a probability of less than 0.0001 because states with low probabilities won't have significant impact on the belief.</p>
 
                                     <h3 class="mb-4 text-secondary">Sensor Model P(Z|X)</h3>
+                                    <p class="mb-4">This function computes the conditional probability p(zt|xt) based on the true observations for the robot poses. This will be used during the update step.</p>
                                     <p class="mb-4">Note that OBS_PER_CELL is in mapper, not loc.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/sensor_model_code.png" alt="..."/>
 
                                     <h3 class="mb-4 text-secondary">Update Step of the Bayes Filter</h3>
+                                    <p class="mb-4">This function updates the probabilities in bel based on the sensor model and bel_bar from the prediction step. This is line 3 in the Bayes Filter Algorithm mentioned in the beginning of this report.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/10/update_step_code.png" alt="..."/>
+                                    <p class="mb-4">The bel values returned from the Bayes Filter algorithm represents the belief of the robot's state.</p>
 
                                     <h3 class="mb-4 text-secondary">Comparison</h3>
+                                    <p class="mb-4">To show the effect of the Bayes Filter, I recorded one simulation run without the filter and one with the filter. The blue plot represents the belief, the red plot represents the odometry, and the green plot represents the ground truth.</p>
+                                    <h6 class="mb-4 text-secondary">Without Bayes Filter</h6>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/9S-MSrhyLBU?si=LmQ6GB6lNtQIk0ne" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4"></p>
+                                    <p class="mb-4">As shown in the video, the odometry data is unrelible and sometimes doesn't even stay inside the map.</p>
+                                    <h6 class="mb-4 text-secondary">With Bayes Filter</h6>
+                                    <p class="mb-4">As shown in the video, the belief data is a lot more reliable than the odometry data and matches well with the ground truth data. The lower half of the screen recording shows the prediction and update stats for each motion step!</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/R9O1NPEDNtY?si=luAz1VLNNElr-2SG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">According to the results, the algorithm seems to work the best when the robot is closer to the walls.</p>
 
                                     <h3 class="mb-4 text-secondary">References</h3>
-                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner, Mikayla Lahr, and Daria Kot’s websites!</p>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Lecture 18 and 20 slides and Stephan Wagner and Daria Kot’s websites!</p>
                                     <p></p>
                                     
                                     <div style="display: flex; align-items: center; justify-content: center;">
