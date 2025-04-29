@@ -151,6 +151,15 @@
                             <img class="img-fluid" src="assets/10/lab_10_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 11-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal11">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/11/lab_11_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1302,7 +1311,7 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Text-->
-                                    <!-- Lab 9 -->
+                                    <!-- Lab 10 -->
                                     <p class="mb-4">The goal of this lab is to implement grid localization using Bayes Filter!</p>
 
                                     <h3 class="mb-4 text-secondary">Bayes Filter Algorithm</h3>
@@ -1356,6 +1365,127 @@
 
                                     <h3 class="mb-4 text-secondary">References</h3>
                                     <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Lecture 18 and 20 slides and Stephan Wagner and Daria Kot’s websites!</p>
+                                    <p></p>
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Modal 11-->
+        <div class="portfolio-modal modal fade" id="portfolioModal11" tabindex="-1" aria-labelledby="portfolioModal11" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 11: Localization on the Real Robot</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 11 -->
+                                    <p class="mb-4">The goal of this lab is to implement localization with Bayes Filter on the robot and compare the real robot results to the simulation results!</p>
+
+                                    <h3 class="mb-4 text-secondary">Grid Localization</h3>
+                                    <p class="mb-4">In Lab 10, we implemented grid localization in a simulation environment. The results show that the belief can accurately model the ground truth positions. The plot below is the localization simulation result from lab11_sim.ipynb. The blue plot represents the belief, the red plot represents the odometry, and the green plot represents the ground truth.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/sim_final_plot.png" alt="..."/>
+
+                                   
+                                    <h3 class="mb-4 text-secondary">Jupyter Notebook Implementation</h3>
+                                    <p class="mb-4">For the notebook side, we have to implement class RealRobot's member function perform_observation_loop. The function basically commands the robot to do a counter clockwise 360 degree turn while recording ToF sensor data every 20 degrees.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/perform_obs_loop_code.png" alt="..."/>
+                                    <p class="mb-4">The function first sends the BLE command "LOC_MAP" to the robot, then waits until the robot finishes sending back data. Afterwards, it returns 2 numpy column arrays, one for ToF sensor data, one for yaw measurements. Same as Lab 9's MAP command, the LOC_MAP commmand sets the execution time limit, KP, KI, and KD values. </p>
+
+                                    <p class="mb-4">In addition, I added a notification handler function to receive BLE data from the robot.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/notif_handler_code.png" alt="..."/>
+
+                                    <p class="mb-4">Since I'm using asyncio coroutines to allow the function to wait for the robot to finish sending data, I had to modify the get_observation_data function in the BaseLocalization class to include the keywords async and await.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/get_obs_code.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/await_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Robot Implementation</h3>
+                                    <p class="mb-4">For the robot side, I reused the code I implemented in Lab 9 (Mapping). However, in Lab 9, I programmed the robot to turn clockwise with 20 degrees increments. Therefore, for this lab I modified the setpoints so that the robot would turn counter-clockwise instead.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/pid_code.png" alt="..."/>
+                                    <p class="mb-4">Same as Lab 9, the LOC_MAP command starts the start_mapping_pid flag and uses the current yaw (DMP value) and current setpoint value to compute the orientation PID. Afterwards, the PID controller determines the motor input based on the computed u value, as shown in the code snippet above.</p>
+                                    
+                                    
+                                    <h3 class="mb-4 text-secondary">Results</h3>
+                                    <p class="mb-4">One thing to keep in mind is that the robot's starting position should be facing the left side of the lab wall, which is the 0 degrees angle for this lab. Initially, I placed the robot facing forward, which caused inaccurate results.</p>
+                                    
+                                    <p class="mb-4">Additionally, the green dot represents the ground truth, and the blue dot represents the belief!</p>
+                                    <h6 class="mb-4 text-secondary">(5, -3)</h6>
+                                    <p class="mb-4">The result of this marked position is relatively accurate. The belief is a bit closer to the bottom wall than the ground truth. The slight variation could be caused by the placement of the ToF sensor since we're not accounting for the distance bewteen the middle and front side (where the ToF sensor is) of the robot.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/5_neg_3/plot.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/5_neg_3/terminal_output.png" alt="..."/>
+                                        </div>
+                                    </div>
+                                    <p class="mb-4">However, this marked position showed inconsistent results. Sometimes the blue dot (belief) would be on the other side of the wall (left side). I think it's because the two corners of the lab environment have a similar setup. The plot below showed a failed attempt for (5, -3).</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/11/5_neg_3/bad_plot.png" alt="..."/>
+                                    <p></p>
+
+                                    <h6 class="mb-4 text-secondary">(5, 3)</h6>
+                                    <p class="mb-4">The result of this marked position is relatively accurate. The belief is a bit closer to the right side wall than the ground truth. As mentioned above, the slight variation could be caused by the placement of the ToF sensor.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/5_3/plot.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/5_3/terminal_output.png" alt="..."/>
+                                        </div>
+                                    </div>
+                                    <p></p>
+
+                                    <h6 class="mb-4 text-secondary">(0, 3)</h6>
+                                    <p class="mb-4">The result of this marked position is relatively accurate. The belief is a bit closer to the left side wall than the ground truth. As mentioned above, the slight variation could be caused by the placement of the ToF sensor.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/0_3/plot.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/0_3/terminal_output.png" alt="..."/>
+                                        </div>
+                                    </div>
+                                    <p></p>
+
+                                    <h6 class="mb-4 text-secondary">(-3, -2)</h6>
+                                    <p class="mb-4">The marked position (-3, -2) performed very well in comparison to the other marked points. The blue and green dots are exactly at the same point, therefore I attached two screenshots of the plot. I think it might be because this section of the lab environment is unique in comparison to the other marked sections.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/neg_3_neg_2/plot_1.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/neg_3_neg_2/plot_2.png" alt="..."/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img class="img-fluid rounded mb-3" src="assets/11/neg_3_neg_2/terminal_output.png" alt="..."/>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                    
+
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Stephan Wagner and Daria Kot’s websites!</p>
                                     <p></p>
                                     
                                     <div style="display: flex; align-items: center; justify-content: center;">
