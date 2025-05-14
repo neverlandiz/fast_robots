@@ -160,6 +160,15 @@
                             <img class="img-fluid" src="assets/11/lab_11_cover.jpg" alt="image will be added" />
                         </div>
                     </div>
+                    <!-- Lab Item 12-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal12">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/12/lab_12_cover.jpg" alt="image will be added" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1501,7 +1510,103 @@
                 </div>
             </div>
         </div>
+
+        <!-- Portfolio Modal 12-->
+        <div class="portfolio-modal modal fade" id="portfolioModal12" tabindex="-1" aria-labelledby="portfolioModal12" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-center text-secondary text-uppercase mb-0">Lab 12: Path Planning and Execution</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom text-center">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <!-- Portfolio Modal - Text-->
+                                    <!-- Lab 12 -->
+                                    <p class="mb-4">The goal of this lab is to have the robot navigate through a set of waypoints in the lab environment. The lab is open ended.</p>
+
+                                    <h3 class="mb-4 text-secondary">Waypoints</h3>
+                                    <p class="mb-4">Here is an image showing the waypoints in a lab environment simulation.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/world.png" alt="..."/>
+
+                                    <p class="mb-4">Here are the set of waypoints that the robot needs to reach.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/waypoints.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Onboard vs Offboard</h3>
+                                    <p class="mb-4">For the previous labs, a lot of the processing was based on onboard processing with the Artemis. However, for this lab, I decided to keep most of the path processing offboard with Jupyter Notebook. This way, it simplifies the tuning process and lessens the computation required for the robot. Therfore, the computer does the path planning and sends commands to the robot, while the robot focuses on PID computation and motor control.</p>
+
+                                    <h3 class="mb-4 text-secondary">Approach</h3>
+                                    <p class="mb-4">For this lab, I decided to combine path planning with PID control. To do this, I first created a function called "path_planning" that outputs a "path_array" that includes orientation and linear controls in a sequence. In the function, it calls the function "move_to_waypoint", with parameters current_x, current_y, target_x, and target_y.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/path_planning_code.png" alt="..."/>
+
+                                    <p class="mb-4">Inside the function "move_to_waypoint," it computes the angle and distance that the robot needs to move/turn to reach the target point. Using these values, the function then transforms the angle to match with the robot's setup. Since I decided to start the robot at point (-4, -3) at 45 degrees, I subtracted that offset in the code. Furthermore, using the computed distance, the function transforms it into a time value (in ms) that the robot needs to move forward for at 90 motor input. The factor was determined through the velocity of the robot at the specific motor input and some tuning. Lastly, the function combines the angle and time information and converts it into a command string format so that it could be used for the BLE commands "PATH_TURN" and "PATH_FORWARD."</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/move_to_waypoint_code.png" alt="..."/>
+
+                                    <p class="mb-4">Here is a screenshot showing a sample result returned by the "move_to_waypoint" function.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/move_to_waypoint_example.png" alt="..."/>
+
+                                    <p class="mb-4">Here is a screenshot showing an example of the "path_array" contents.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/path_array_example.png" alt="..."/>
+
+                                    <p class="mb-4">To execute the path that was planned through the "path_planning" function, I created a function "execute_path" and two new commands "PATH_FORWARD" and "PATH_TURN." The "execute_path" function loops through the paths computed and calls the two BLE commands correspondingly. The "PATH_FORWARD" command controls the robot to move forward using inputs such as execution time and motor input. The "PATH_TURN" command controls the robot to move to the desired angle using orientation PID control.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/execute_path_code.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/path_forward_code.png" alt="..."/>
+                                    <img class="img-fluid rounded mb-5" src="assets/12/path_turn_code.png" alt="..."/>
+
+                                    <h3 class="mb-4 text-secondary">Tuning Process</h3>
+                                    <p class="mb-4">Initially, I didn't include the waypoint (5, -2) because point (5, -3) to (5, 3) is a straight line. However, after multiple test runs, I realized that this corner was really difficult for the robot to move around due to how close the box obstable is to the robot's straight path. If the robot isn't going perfectly straight the entire time, it would result in the robot hitting the box. Therefore, I included the (5, -2) point so that the robot would recalibrate it's angle before driving straight again.</p>
+
+                                    <p class="mb-4">Furthermore, due to hardware noise and the charge of the battery, I tuned some of the parameters from the "path_planning" function before feeding it into the "execute_path" function. For example, on a fully charged battery, the robot can move 2 tiles in roughly 650 ms. However, on an almost dead battery, it would take more than 700 ms to travel the same amount of distance.</p>
+
+                                    <h3 class="mb-4 text-secondary">Result</h3>
+                                    <p class="mb-4">Here are some of my best results for this lab.</p>
+
+                                    <h6 class="mb-4 text-secondary">Best Run</h6>
+                                    <p class="mb-4">For this run, the robot was able to reach all the waypoints. Note that it got stuck around point (5, -3), so I pushed it a little bit there.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/IbpW62lN9aY?si=Xo0vtWPPMll1T0EM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h6 class="mb-4 text-secondary">Other Runs</h6>
+                                    <p class="mb-4">For this run, the robot was able to make a loop around the map.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7q2xsTY6bGc?si=zxsji6C2K07FNZ3_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <p class="mb-4">For this run, the robot couldn't reach the last waypoint. It went towards the side wall on the last turn.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/wHTboEKkwK8?si=Cl0PnvDWu_WIF1gN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <p class="mb-4">For this run, the robot was able to cleanly hit the first few waypoints; however, it was only able to finish 7/9 waypoints.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/IRjUx1Pebzo?si=nxKNpjk-94y80PiP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p></p>
+
+                                    <h3 class="mb-4 text-secondary">Conclusion</h3>
+                                    <p class="mb-4">In conclusion, I had a lot of fun and learned a lot this semester. The most difficult part about this lab was how the robot performed differently based on different battery charge. However, I was extremely grateful for the additional world created in the hallway. I wouldn't have been able to complete the lab without it! Thank you to the teaching staff for the amazing semester!</p>
+
+                                    <h3 class="mb-4 text-secondary">References</h3>
+                                    <p class="mb-4">Thank you to Professor Helbling and the TAs for their help during lab sessions. Furthermore, I referenced Nila Narayan and Daria Kot’s websites!</p>
+                                    <p></p>
                                     
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-primary" data-bs-dismiss="modal">
+                                            <i class="fas fa-xmark fa-fw"></i>
+                                            Close Window
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
